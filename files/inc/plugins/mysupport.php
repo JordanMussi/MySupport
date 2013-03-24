@@ -1994,6 +1994,15 @@ function mysupport_thread_list()
 		// set some stuff for this forum that will be used in various places in this function
 		if($mybb->input['fid'])
 		{
+			$fid = intval($mybb->input['fid']);
+			$forumpermissions = forum_permissions();
+			$fpermissions = $forumpermissions[$fid];
+
+			if($fpermissions['canview'] != 1)
+			{
+				error_no_permission();
+			}
+			
 			$forum_info = get_forum(intval($mybb->input['fid']));
 			$list_where_sql = " AND t.fid = ".intval($mybb->input['fid']);
 			$stats_where_sql = " AND fid = ".intval($mybb->input['fid']);
